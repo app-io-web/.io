@@ -1,0 +1,73 @@
+/* Signup.css */
+@import url('https://fonts.googleapis.com/css2?family=Modak&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    padding: 20px 0;
+}
+
+.inputGroup {
+    width: 90%;
+    max-width: 300px;
+    /* background-color: #f9f9f9; */
+    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 10px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.label {
+    display: block; /* Garante que o label seja tratado como um bloco, aparecendo acima do input */
+    color: #ff00a1;
+    font-family: 'Modak', cursive;
+    font-size: 17px;
+    margin-bottom: 5px;
+    letter-spacing: 0.3px;
+}
+.CadastroH1{
+    color: #ff00a1;
+    font-family: "Pacifico", serif;
+    font-size: 38px;
+    letter-spacing: 0.3px;
+}
+
+.input {
+    width: 88%;
+    height: 34px;
+    background-color: #ffffff;
+    border: 2px solid #ff00a1;
+    border-radius: 6px;
+    outline: none;
+    padding: 0 5px;
+}
+
+.button {
+    width: 195px;
+    height: 36px;
+    background-color: #ff00a1;
+    color: white;
+    font-family: 'Modak', cursive;
+    font-size: 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+  
+  /* Posicionamento específico */
+  .inputGroup:nth-child(1) { top: 145px; left: 76px; } /* Email */
+  .inputGroup:nth-child(2) { top: 215px; left: 76px; } /* Senha */
+  .inputGroup:nth-child(3) { top: 285px; left: 76px; } /* Nome Namorado */
+  .inputGroup:nth-child(4) { top: 355px; left: 76px; } /* Nome Namorada */
+  .inputGroup:nth-child(5) { top: 425px; left: 76px; } /* Data de Início de Namoro */
+  .inputGroup:nth-child(6) { top: 495px; left: 76px; } /* Checkbox Casamento */
+  .inputGroup:nth-child(7) { top: 565px; left: 76px; } /* Data de Início de Casamento, se aplicável */
+  
