@@ -128,7 +128,7 @@ function Signup() {
           {/* Botões de navegação */}
           <div className="buttonContainer">
             <button onClick={handleNextStep} className="button">Continuar para frases românticas</button>
-            <button onClick={() => window.location.href = '/'} className="backButtonCAD">Voltar para Login</button>
+            <button onClick={() => window.location.href = '#/'} className="backButtonCAD">Voltar para Login</button>
           </div>
         </>
       )}

@@ -10,6 +10,7 @@ function App() {
   const handleLogin = (userData) => {
     console.log('🔑 Usuário autenticado:', userData);
     setUser(userData);
+    window.location.href = "#/"; // Redireciona para a página principal após login
   };
 
   return (
