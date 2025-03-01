@@ -1,0 +1,73 @@
+/* PhrasesForm.css */
+.phrasesFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+  
+.phrasesFormInput {
+    width: 93%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ff00a1; /* Borda rosa para alinhar com o tema */
+    border-radius: 4px;
+}
+  
+.phrasesFormButton {
+    width: 100%; /* Ajuste para garantir que todos os botões tenham a mesma largura */
+    padding: 10px;
+    margin-bottom: 10px; /* Espaçamento uniforme abaixo de cada botão */
+    background-color: #ff00a1; /* Cor rosa primária para os botões */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.phrasesFormButton:hover {
+    background-color: #e6008c; /* Um tom mais escuro de rosa ao passar o mouse */
+}
+  
+/* Estilo específico para o botão de finalizar cadastro */
+.finishButton {
+    background-color: #ff005a; /* Verde para indicar 'finalizar' ou 'completar' */
+}
+  
+.finishButton:hover {
+    background-color: #c50749; /* Um verde mais escuro ao passar o mouse */
+}
+  
+/* Estilo específico para o botão de voltar */
+.backButton {
+    background-color: #aa47c0; /* Amarelo para 'voltar' ou 'atenção' */
+}
+  
+.backButton:hover {
+    background-color: #692279; /* Amarelo mais escuro ao passar o mouse */
+}
+
+.phrasesFormContainer ul {
+    list-style-type: none; /* Remove os marcadores de lista */
+    padding: 0;
+}
+  
+.phrasesFormContainer li {
+    background-color: #e318ab; /* Um leve background para cada frase */
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 10px;
+}
+
+.CadastroH3{
+    color: #e318ab;
+}
+
+.FrasesLI{
+    color: white;
+}

@@ -60,6 +60,14 @@
     margin-top: 20px;
 }
 
+.passwordPreview {
+    color: #f169c0; /* Cor de rosa para manter o tema */
+    font-family: 'monospace', cursive;
+    font-size: 12px;
+    margin-top: 5px; /* Espaço entre o input e o preview */
+  }
+  
+
 
   
   /* Posicionamento específico */
