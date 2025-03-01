@@ -7,7 +7,7 @@
     background-color: #fff;
 }
 
-.loginTitle {
+.lePeek {
     font-family: 'Modak', cursive;
     font-size: 47px;
     color: #ff00a1;
@@ -77,3 +77,23 @@
 .signupLink:hover {
     text-decoration: underline;
 }
+
+
+@keyframes lePeek {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    25% { transform: rotateX(30deg) translateY(10px) rotate(-13deg); opacity: 0.9; }
+    50% { transform: translateY(-22px) rotate(3deg) scale(1.1); opacity: 1; }
+    100% { transform: translateY(0) rotate(0); opacity: 1; }
+}
+
+.lePeek span {
+    display: inline-block;
+    animation: lePeek 1.5s ease-in-out infinite alternate;
+}
+
+/* Aplica um pequeno atraso para cada letra */
+.lePeek span:nth-child(1) { animation-delay: 0s; }
+.lePeek span:nth-child(2) { animation-delay: 0.1s; }
+.lePeek span:nth-child(3) { animation-delay: 0.2s; }
+.lePeek span:nth-child(4) { animation-delay: 0.3s; }
+.lePeek span:nth-child(5) { animation-delay: 0.4s; }

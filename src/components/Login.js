@@ -1,40 +1,40 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // 🔗 Para navegação
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 const BASE_URL = "https://nocodb.nexusnerds.com.br/api/v2/tables/m6xunqz86pfl6bg/records";
 
 function Login({ handleLogin }) {
-  const [identifier, setIdentifier] = useState(''); // Pode ser e-mail ou nome único
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
-  const [usePassword, setUsePassword] = useState(false); // Alternar se senha é necessária
+  const [usePassword, setUsePassword] = useState(false);
   const [error, setError] = useState('');
 
-  // Detectar se o identificador é um e-mail automaticamente
   const handleIdentifierChange = (e) => {
     const value = e.target.value;
     setIdentifier(value);
-
-    // Se for um e-mail, ativa o campo de senha automaticamente
+  
+    // Se o valor contiver "@", ativa a senha. Caso contrário, desativa e limpa o campo de senha.
     if (value.includes('@')) {
       setUsePassword(true);
+    } else {
+      setUsePassword(false);
+      setPassword(""); // Limpa a senha ao ocultar o campo
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Limpa os erros
+    setError('');
 
     console.log(`🔍 Tentando login com: ${identifier} ${usePassword ? `(com senha)` : `(sem senha)`}`);
 
     let query;
-
     if (usePassword) {
-      // Login por e-mail e senha
       query = `${BASE_URL}?where=(Email,eq,${identifier})~and(Password,eq,${password})`;
     } else {
-      // Login por nome único (UnicNameNamorado ou UnicNameNamorada)
       query = `${BASE_URL}?where=(UnicNameNamorado,eq,${identifier})~or(UnicNameNamorada,eq,${identifier})`;
     }
 
@@ -51,7 +51,7 @@ function Login({ handleLogin }) {
 
       if (response.data.list.length > 0) {
         console.log('✅ Login bem-sucedido!');
-        handleLogin(response.data.list[0]); // Passa os dados do usuário
+        handleLogin(response.data.list[0]);
       } else {
         console.log('❌ Nenhum usuário encontrado.');
         setError('Usuário ou senha inválidos.');
@@ -64,7 +64,13 @@ function Login({ handleLogin }) {
 
   return (
     <div className="loginContainer">
-      <h1 className="loginTitle">Login</h1>
+      {/* 🔤 Criando o efeito letra por letra no título */}
+      <h1 className="lePeek">
+        {"Login".split("").map((char, index) => (
+          <span key={index}>{char}</span>
+        ))}
+      </h1>
+
       <form onSubmit={handleSubmit} className="loginForm">
         <label className="loginLabel">Email ou Nome de Usuário:</label>
         <input
@@ -92,7 +98,6 @@ function Login({ handleLogin }) {
 
         {error && <p className="errorMessage">{error}</p>}
 
-        {/* 🔗 Link para o Cadastro */}
         <p className="signupText">
           Ainda não tem uma conta? <Link to="/signup" className="signupLink">Cadastre-se</Link>
         </p>
