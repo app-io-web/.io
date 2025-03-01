@@ -67,6 +67,30 @@
     margin-top: 5px; /* Espaço entre o input e o preview */
   }
   
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.backButtonCAD {
+    width: 100%;
+    font-family: 'Modak', cursive;
+    font-size: 16px;
+    padding: 6px;
+    margin-top: -2px;
+    background-color: #800080;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.backButtonCAD:hover {
+    background-color: #6a006a;
+}
 
 
   

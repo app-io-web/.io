@@ -1,0 +1,79 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.loginTitle {
+    font-family: 'Modak', cursive;
+    font-size: 47px;
+    color: #ff00a1;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.loginForm {
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.loginLabel {
+    font-size: 14px;
+    color: #ff00a1;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.loginInput {
+    width: 93%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #d9d9d9;
+    outline: none;
+}
+
+.loginButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff00a1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.loginButton:hover {
+    background-color: #e6008c;
+}
+
+/* 🔗 Link para o Cadastro */
+.signupText {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.signupLink {
+    color: #ff00a1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signupLink:hover {
+    text-decoration: underline;
+}

@@ -91,17 +91,17 @@ function Signup() {
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" />
           </div>
           <div className="inputGroup">
-              <label className='label'>Senha:</label>
-              <input 
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input"
-                onFocus={() => setShowPasswordPreview(true)}
-                onBlur={() => setShowPasswordPreview(false)}
-              />
-              {showPasswordPreview && <div className="passwordPreview">{password}</div>}
-            </div>
+            <label className='label'>Senha:</label>
+            <input 
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input"
+              onFocus={() => setShowPasswordPreview(true)}
+              onBlur={() => setShowPasswordPreview(false)}
+            />
+            {showPasswordPreview && <div className="passwordPreview">{password}</div>}
+          </div>
           <div className="inputGroup">
             <label className='label'>Seu Primeiro Nome(Namorado):</label>
             <input type="text" value={nomeNamorado} onChange={(e) => setNomeNamorado(e.target.value)} className="input" />
@@ -124,9 +124,15 @@ function Signup() {
               <input type="date" value={dataInicioCasamento} onChange={(e) => setDataInicioCasamento(e.target.value)} className="input" />
             </div>
           )}
-          <button onClick={handleNextStep} className="button">Continuar para frases românticas</button>
+          
+          {/* Botões de navegação */}
+          <div className="buttonContainer">
+            <button onClick={handleNextStep} className="button">Continuar para frases românticas</button>
+            <button onClick={() => window.location.href = '/'} className="backButtonCAD">Voltar para Login</button>
+          </div>
         </>
       )}
+
       {currentStep === 2 && (
         <PhrasesForm 
           handleSignup={handleSignup} 
