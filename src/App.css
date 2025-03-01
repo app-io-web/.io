@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+
+.input {
+  font-size: 16px !important; /* Evita o zoom automático no iOS */
+  padding: 10px;
+}
