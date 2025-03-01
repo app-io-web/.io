@@ -7,11 +7,12 @@ function PhrasesForm({ handleSignup, handlePreviousStep, frases, setFrases, setP
   const [currentStep, setCurrentStep] = useState(1);
 
   const addPhrase = () => {
-    if (phrase.trim() !== '') {
-      setFrases(prev => [...prev, phrase]);
+    if (phrase) {
+      setFrases(prevPhrases => [...prevPhrases, phrase]);
       setPhrase('');
     }
   };
+  
 
   const goToNextStep = () => {
     if (frases.length === 0) {

@@ -36,17 +36,19 @@ function Signup() {
       setModalIsOpen(true);
       return;
     }
-
+  
     const idUnic = uuidv4();
-    const frasesUnicas = JSON.stringify(frases);
+    const unicNameNamorado = `${nomeNamorado.toLowerCase()}_${idUnic.substring(0, 8)}`;
+    const unicNameNamorada = `${nomeNamorada.toLowerCase()}_${idUnic.substring(0, 8)}`;
+    const frasesUnicas = JSON.stringify(frases); 
     const fotosJson = JSON.stringify(photos);
-
+  
     const config = {
       headers: {
-        'xc-token': `${process.env.REACT_APP_NOCODB_API_KEY}`
+        'xc-token': process.env.REACT_APP_NOCODB_API_KEY
       }
     };
-
+  
     try {
       const response = await axios.post(`${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`, {
         Email: email,
@@ -55,21 +57,26 @@ function Signup() {
         NomeNamorada: nomeNamorada,
         Data_Inicio_Namoro: dataInicioNamoro,
         ID_UNIC: idUnic,
+        UnicNameNamorado: unicNameNamorado,
+        UnicNameNamorada: unicNameNamorada,
         E_Casado: isCasado,
         Data_Inicio_Casamento: isCasado ? dataInicioCasamento : null,
         FRASES_UNICAS: frasesUnicas,
         FOTOS_JSON: fotosJson
       }, config);
-
-      console.log('Cadastro realizado:', response.data);
+  
+      console.log('✅ Cadastro realizado:', response.data);
       setModalMessage('Cadastro realizado com sucesso!');
       setModalIsOpen(true);
+  
     } catch (error) {
-      console.error('Erro no cadastro:', error);
+      console.error('❌ Erro no cadastro:', error);
       setModalMessage('Erro no cadastro: ' + (error.response ? error.response.data : error.message));
       setModalIsOpen(true);
     }
   };
+  
+
   
   
 
@@ -125,8 +132,10 @@ function Signup() {
           handleSignup={handleSignup} 
           handlePreviousStep={handlePreviousStep} 
           frases={frases} 
+          updatePhotosJson={setPhotos} // ✅ Agora setPhotos está sendo passado corretamente
           setFrases={setFrases} 
-          setPhotos={setPhotos} // ✅ Corrigido
+          photos={photos} // ✅ Adicionando a referência correta para fotos
+          setPhotos={setPhotos} // ✅ Garantindo que as fotos sejam atualizadas corretamente
           dadosCadastro={{
             email,
             password,
@@ -134,12 +143,15 @@ function Signup() {
             nomeNamorada,
             dataInicioNamoro,
             isCasado,
-            dataInicioCasamento
-          }} // ✅ Passando os dados corretamente
-          setModalMessage={setModalMessage} // ✅ Passando o modal corretamente
-          setModalIsOpen={setModalIsOpen} // ✅ Passando o modal corretamente
+            dataInicioCasamento,
+            unicNameNamorado: `${nomeNamorado.toLowerCase()}_${uuidv4().substring(0, 8)}`, // ✅ Garantindo a geração do UnicName
+            unicNameNamorada: `${nomeNamorada.toLowerCase()}_${uuidv4().substring(0, 8)}`  // ✅ Garantindo a geração do UnicName
+          }} 
+          setModalMessage={setModalMessage} // ✅ Passando corretamente o modal
+          setModalIsOpen={setModalIsOpen} // ✅ Passando corretamente o modal
         />
       )}
+
 
 
       <ConfirmationModal

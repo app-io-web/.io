@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import Lottie from "lottie-react";
 import uploadAnimation from '../assets/lotieFiles/Upload.json';
 import completedAnimation from '../assets/lotieFiles/UploadComplet.json';
@@ -7,7 +8,7 @@ import './PhotoUploadForm.css';
 
 const BASE_URL = "https://nocodb.nexusnerds.com.br"; // 🚀 URL base do NoCoDB
 
-function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJson, frases, dadosCadastro, setModalMessage, setModalIsOpen }) {
+function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJson, frases, dadosCadastro, setModalMessage, setModalIsOpen, setPhotos }) {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadComplete, setUploadComplete] = useState(false);
@@ -32,16 +33,16 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
       setError('Por favor, selecione um arquivo antes de enviar.');
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('file', file);
-
+  
     setUploading(true);
     setError('');
-
+  
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/v2/storage/upload`,
+        `${BASE_URL}/api/v2/storage/upload`, 
         formData,
         {
           headers: {
@@ -50,23 +51,15 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
           }
         }
       );
-
+  
       console.log('✅ Upload bem-sucedido:', response.data);
-
+  
       if (response.data && response.data.length > 0) {
         const filePath = response.data[0].path;
-        const fileUrl = `${BASE_URL}/${filePath}`;
-
-        // Atualiza a lista de fotos
+        const fileUrl = `${BASE_URL}/${filePath}`; 
+  
         setUploadedPhotos(prevPhotos => [...prevPhotos, fileUrl]);
-
-        // Garante que `updatePhotosJson` seja uma função antes de chamar
-        if (typeof updatePhotosJson === 'function') {
-          updatePhotosJson([...uploadedPhotos, fileUrl]); 
-        } else {
-          console.warn('⚠️ updatePhotosJson não foi passado corretamente como prop.');
-        }
-
+        setPhotos(prevPhotos => [...prevPhotos, fileUrl]); // ✅ Atualizando corretamente
         setUploadComplete(true);
       } else {
         setError('Erro ao obter a URL da imagem.');
@@ -78,35 +71,44 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
       setUploading(false);
     }
   };
+  
+  
 
   const handleFinalize = async () => {
-    // 🚨 Verifica se `dadosCadastro` está definido antes de acessá-lo
     if (!dadosCadastro) {
       setError('Erro: Dados do cadastro não estão disponíveis.');
       return;
     }
-
-    // 🚨 Verifica se todos os campos obrigatórios estão preenchidos
+  
     if (!dadosCadastro.email || !dadosCadastro.password || !dadosCadastro.nomeNamorado || !dadosCadastro.nomeNamorada || !dadosCadastro.dataInicioNamoro) {
       setError('⚠️ Preencha todos os campos antes de finalizar.');
       return;
     }
-
+  
     if (uploadedPhotos.length === 0) {
       setError('⚠️ Adicione pelo menos uma foto antes de finalizar.');
       return;
     }
-
+  
     const finalData = {
-      ...dadosCadastro,
+      Email: dadosCadastro.email,  // ✅ Certifique-se que os nomes batem com os do NoCoDB
+      Password: dadosCadastro.password,
+      NomeNamorado: dadosCadastro.nomeNamorado,
+      NomeNamorada: dadosCadastro.nomeNamorada,
+      Data_Inicio_Namoro: dadosCadastro.dataInicioNamoro,
+      ID_UNIC: uuidv4(),
+      E_Casado: dadosCadastro.isCasado,
+      Data_Inicio_Casamento: dadosCadastro.isCasado ? dadosCadastro.dataInicioCasamento : null,
       FRASES_UNICAS: JSON.stringify(frases),
-      FOTOS_JSON: JSON.stringify(uploadedPhotos)
+      FOTOS_JSON: JSON.stringify(uploadedPhotos),
+      UnicNameNamorado: `${dadosCadastro.nomeNamorado.toLowerCase()}_${uuidv4().substring(0, 8)}`,
+      UnicNameNamorada: `${dadosCadastro.nomeNamorada.toLowerCase()}_${uuidv4().substring(0, 8)}`
     };
-
-    console.log('📤 Enviando JSON Final:', finalData);
-
+  
+    console.log("📤 Enviando JSON Final:", finalData); // ✅ Log dos dados antes de enviar
+  
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`,
         finalData,
         {
@@ -115,17 +117,15 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
           }
         }
       );
-
-      // ✅ Chama o modal de sucesso
+  
       setModalMessage('🎉 Cadastro finalizado com sucesso!');
       setModalIsOpen(true);
-
-      handleFinalSubmit();
     } catch (error) {
-      console.error('❌ Erro ao finalizar cadastro:', error);
-      setError('Erro ao finalizar cadastro.');
+      console.error('❌ Erro no cadastro:', error);
+      setError('Erro no cadastro.');
     }
   };
+  
 
   return (
     <div className="photoUploadContainer">
