@@ -39,26 +39,29 @@ function MainScreen({ user, logout }) {
     setMenuOpen((prev) => !prev);
   };
 
-      // ✅ Verifica se as músicas são JSON ou string única
-    const musicas = (() => {
-      try {
-        return JSON.parse(user.MusicCasal);
-      } catch {
-        return Array.isArray(user.MusicCasal) ? user.MusicCasal : [user.MusicCasal];
-      }
-    })();
+  // ✅ Verifica se as músicas são JSON válido ou string única
+  const musicas = (() => {
+    try {
+      return user.MusicCasal ? JSON.parse(user.MusicCasal) : []; // Garante um array vazio se não houver músicas
+    } catch {
+      return Array.isArray(user.MusicCasal) ? user.MusicCasal : user.MusicCasal ? [user.MusicCasal] : [];
+    }
+  })();
+
 
 
     // 📌 Obtém a URL da música prioritária ou a primeira da lista
     const getPrioritizedMusic = () => {
+      if (!musicas.length) return ""; // 🔥 Retorna string vazia se não houver músicas
       const prioritizedMusic = musicas.find(music => music.priorizar) || musicas[0];
-      return prioritizedMusic ? prioritizedMusic.url : "";
+      return prioritizedMusic?.url || "";
     };
 
     // 📌 Obtém o nome da música prioritária ou a primeira da lista
     const getPrioritizedMusicName = () => {
+      if (!musicas.length) return "Sem Música"; // 🔥 Retorna mensagem padrão
       const prioritizedMusic = musicas.find(music => music.priorizar) || musicas[0];
-      return prioritizedMusic ? prioritizedMusic.nome : "Sem Música";
+      return prioritizedMusic?.nome || "Sem Nome";
     };
 
     
@@ -319,11 +322,12 @@ useEffect(() => {
         {/* 🎵 Player de Música */}
         <div className="music-player-container">
           {musicas.length > 0 ? (
-            <CustomAudioPlayer src={getPrioritizedMusic()} name={getPrioritizedMusicName()}  showName={false} />
+            <CustomAudioPlayer src={getPrioritizedMusic()} name={getPrioritizedMusicName()} showName={false} />
           ) : (
             <p className="no-music-text">Nenhuma música disponível</p>
           )}
         </div>
+
 
 
       {/* 🎵 Elemento de áudio oculto */}
