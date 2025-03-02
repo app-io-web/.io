@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import MainScreen from './components/MainScreen';
+import EditAccount from './components/EditAccount';
+import Gallery from './components/Gallery'; // ✅ Importando a Galeria
+import EditPhrases from './components/EditPhrases';
+import MusicCasal from './components/MusicCasal';
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  // ✅ Função de login: salva o usuário e cria um token temporário
   const handleLogin = (userData) => {
     console.log('🔑 Usuário autenticado:', userData);
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData)); // ✅ Armazena no LocalStorage
-    localStorage.setItem('token', Date.now() + (5 * 60 * 1000)); // ✅ Token de 5 min
-    window.location.href = "#/main"; // ✅ Redireciona para a tela principal
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', Date.now() + (5 * 60 * 1000));
+    window.location.href = "#/main";
   };
 
-  // ❌ Função de logout: limpa os dados e redireciona para login
   const handleLogout = () => {
     console.log("🚪 Saindo e limpando sessão...");
     setUser(null);
-    localStorage.removeItem('user'); // 🔥 Remove o usuário do LocalStorage
-    localStorage.removeItem('token'); // 🔥 Remove o token
-    window.location.href = "#/"; // 🔥 Redireciona para a tela de login
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    window.location.href = "#/";
   };
 
   return (
@@ -33,6 +38,11 @@ function App() {
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/main" element={user ? <MainScreen user={user} logout={handleLogout} /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/edit-account" element={user ? <EditAccount user={user} updateUser={setUser} logout={handleLogout} /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/gallery" element={user ? <Gallery user={user} updateUser={setUser} /> : <Login handleLogin={handleLogin} />} /> {/* ✅ Adicionando a Galeria */}
+          <Route path="/edit-phrases" element={user ? <EditPhrases user={user} updateUser={setUser} logout={handleLogout} /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/music-casal" element={user ? <MusicCasal user={user} updateUser={setUser} logout={handleLogout} /> : <Login handleLogin={handleLogin} />} />
+
         </Routes>
       </div>
     </Router>

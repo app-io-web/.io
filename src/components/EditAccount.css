@@ -1,0 +1,54 @@
+.edit-account-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #ff00a1;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+/* Ajustando os inputs para ficarem dentro do container */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+  width: 100%; /* 🔥 Agora ocupa exatamente o tamanho da div */
+  box-sizing: border-box; /* 🔥 Garante que padding/borda não ultrapassem */
+  padding: 8px;
+  margin-top: 5px;
+  border: 2px solid #ff00a1;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Ajustando a checkbox */
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Ajuste no botão */
+.buttonsv {
+  width: 100%;
+  padding: 12px;
+  background: #ff00a1;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.buttonsv:hover {
+  background: #e00091;
+}

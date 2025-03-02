@@ -1,0 +1,154 @@
+/* 🔹 Layout aprimorado da galeria */
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  justify-content: center;
+  /* padding: 15px; */
+}
+
+.uploadBoxIn {
+  width: 200px;
+  height: 200px;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ff00a1;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+/* 🔹 Ajuste nos itens da galeria */
+.photoItem {
+  position: relative;
+  width: 100%;
+  max-width: 180px; /* 🔥 Reduzi um pouco para melhor encaixe */
+  height: 180px; /* 🔥 Mantém altura proporcional */
+  overflow: hidden;
+  border-radius: 10px; /* 🔥 Deixa com um design mais arredondado */
+}
+
+
+
+/* 🔹 Estilização melhorada das imagens */
+.uploadedPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔥 Mantém a imagem dentro da div sem distorção */
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out; /* 🔥 Animação ao passar o mouse */
+}
+
+/* 🔹 Efeito de zoom ao passar o mouse */
+.uploadedPhoto:hover {
+  transform: scale(1.05); /* 🔥 Efeito de leve zoom */
+}
+
+
+
+.cancelButton {
+  width: 80%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #7e0351;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cancelButton:hover {
+  background-color: #770250;
+}
+
+
+
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+.confirm-button {
+  background: rgb(240, 4, 189);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.cancel-button {
+  background: gray;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.savePhotosButton {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #ff00a1;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.savePhotosButton:hover {
+  background: #e00091;
+}
+
+
+/* 🔥 Estilização do botão do modal */
+.ButtonModal {
+  background-color: #ff00a1; /* Cor principal */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-top: 10px;
+}
+
+.ButtonModal:hover {
+  background-color: #e00091; /* Cor mais escura ao passar o mouse */
+  transform: scale(1.05);
+}
+
+.ButtonModal:active {
+  background-color: #c0007a;
+  transform: scale(0.98);
+}

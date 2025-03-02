@@ -1,0 +1,44 @@
+{
+    "bodas_de_namoro": [
+      { "nome": "Bodas de Brisa", "tempo": "1 mês" },
+      { "nome": "Bodas de Sorvete", "tempo": "2 meses" },
+      { "nome": "Bodas de Algodão-Doce", "tempo": "3 meses" },
+      { "nome": "Bodas de Pipoca", "tempo": "4 meses" },
+      { "nome": "Bodas de Chocolate", "tempo": "5 meses" },
+      { "nome": "Bodas de Pluma", "tempo": "6 meses" },
+      { "nome": "Bodas de Purpurina", "tempo": "7 meses" },
+      { "nome": "Bodas de Pompom", "tempo": "8 meses" },
+      { "nome": "Bodas de Maternidade", "tempo": "9 meses" },
+      { "nome": "Bodas de Pintinho", "tempo": "10 meses" },
+      { "nome": "Bodas de Chiclete", "tempo": "11 meses" },
+      { "nome": "Bodas de Papel", "tempo": "1 ano" },
+      { "nome": "Bodas de Chumbo", "tempo": "2 anos" },
+      { "nome": "Bodas de Cristal", "tempo": "3 anos" }
+    ],
+    "bodas_de_casamento": [
+      { "nome": "Bodas de Papel", "tempo": "1 ano" },
+      { "nome": "Bodas de Algodão", "tempo": "2 anos" },
+      { "nome": "Bodas de Trigo", "tempo": "3 anos" },
+      { "nome": "Bodas de Flores ", "tempo": "4 anos" },
+      { "nome": "Bodas de Madeira", "tempo": "5 anos" },
+      { "nome": "Bodas de Açúcar", "tempo": "6 anos" },
+      { "nome": "Bodas de Lã", "tempo": "7 anos" },
+      { "nome": "Bodas de Barro", "tempo": "8 anos" },
+      { "nome": "Bodas de Cerâmica", "tempo": "9 anos" },
+      { "nome": "Bodas de Zinco", "tempo": "10 anos" },
+      { "nome": "Bodas de Aço", "tempo": "11 anos" },
+      { "nome": "Bodas de Ônix", "tempo": "12 anos" },
+      { "nome": "Bodas de Renda", "tempo": "13 anos" },
+      { "nome": "Bodas de Marfim", "tempo": "14 anos" },
+      { "nome": "Bodas de Cristal", "tempo": "15 anos" },
+      { "nome": "Bodas de Porcelana", "tempo": "20 anos" },
+      { "nome": "Bodas de Prata", "tempo": "25 anos" },
+      { "nome": "Bodas de Pérola", "tempo": "30 anos" },
+      { "nome": "Bodas de Coral", "tempo": "35 anos" },
+      { "nome": "Bodas de Rubi", "tempo": "40 anos" },
+      { "nome": "Bodas de Esmeralda", "tempo": "45 anos" },
+      { "nome": "Bodas de Ouro", "tempo": "50 anos" },
+      { "nome": "Bodas de Diamante", "tempo": "60 anos" }
+    ]
+  }
+  

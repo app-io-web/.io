@@ -1,0 +1,98 @@
+.edit-phrases-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .menu-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .app-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff00a1;
+    text-align: center;
+  }
+  
+  .phrases-list {
+    margin-top: 20px;
+  }
+  
+  .phrase-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .phrase-input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .delete-button {
+    margin-left: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+  
+  .add-phrase-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .add-phrase-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .add-button {
+    background: #ff00a1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-left: 10px;
+  }
+  
+  .savePhrasesButton {
+    width: 100%;
+    padding: 10px;
+    background: #ff00a1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .savePhrasesButton:hover {
+    background: #e00091;
+  }
+  

@@ -104,7 +104,8 @@
     height: 80px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid #ff00a1;
+    border: 1px solid #ff00a1;
+    box-shadow: -8px 4px 19px 8px rgba(0,0,0,0.1);
 }
 
 .finalizeButton {

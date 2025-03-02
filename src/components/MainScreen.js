@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MainScreen.css';
 import PhraseBox from '../components/PhraseBox';
+import bodasData from '../assets/bodas/bodas.json'; // Certifique-se do caminho correto
+import CustomAudioPlayer from './CustomAudioPlayer';
+
 
 // Importa dinamicamente todas as imagens da pasta 3dModels
 const importAll = (r) => r.keys().map(r);
@@ -19,12 +23,49 @@ const getRandomImages = () => {
 };
 
 function MainScreen({ user, logout }) {
+  const [menuOpen, setMenuOpen] = useState(false); // 🔥 Controla a visibilidade da sidebar
   const [relationshipTime, setRelationshipTime] = useState('');
   const [bodas, setBodas] = useState('');
   const [selectedTab, setSelectedTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [decorImages, setDecorImages] = useState([]);
   const [fadeKey, setFadeKey] = useState(0); // Para controle da animação
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+      // ✅ Verifica se as músicas são JSON ou string única
+    const musicas = (() => {
+      try {
+        return JSON.parse(user.MusicCasal);
+      } catch {
+        return Array.isArray(user.MusicCasal) ? user.MusicCasal : [user.MusicCasal];
+      }
+    })();
+
+
+    // 📌 Obtém a URL da música prioritária ou a primeira da lista
+    const getPrioritizedMusic = () => {
+      const prioritizedMusic = musicas.find(music => music.priorizar) || musicas[0];
+      return prioritizedMusic ? prioritizedMusic.url : "";
+    };
+
+    // 📌 Obtém o nome da música prioritária ou a primeira da lista
+    const getPrioritizedMusicName = () => {
+      const prioritizedMusic = musicas.find(music => music.priorizar) || musicas[0];
+      return prioritizedMusic ? prioritizedMusic.nome : "Sem Música";
+    };
+
+    
+
+
+
+
 
   // ✅ Verifica se as fotos são JSON ou string única
   const photos = (() => {
@@ -51,7 +92,7 @@ function MainScreen({ user, logout }) {
 
   // 📌 Atualiza o tempo de relacionamento em tempo real
   useEffect(() => {
-    const updateTime = () => {
+    const updateTime = async () => {
       if (user.Data_Inicio_Namoro) {
         const startDate = new Date(user.Data_Inicio_Namoro);
         const now = new Date();
@@ -63,36 +104,39 @@ function MainScreen({ user, logout }) {
         const seconds = Math.floor((diffMs / 1000) % 60);
 
         setRelationshipTime(`${days} dias, ${hours} horas, ${minutes} min e ${seconds} s`);
-        setBodas(getBodas(days));
+
+        const updatedBodas = await getBodas(days); // 🔥 Agora busca dinamicamente
+        setBodas(updatedBodas);
       }
     };
 
     updateTime();
-    const interval = setInterval(updateTime, 1000);
+    const interval = setInterval(updateTime, 2000); // 🔄 Atualiza a cada 5 segundos
+
     return () => clearInterval(interval);
   }, [user]);
 
+
+
   // 📌 Define o nome das bodas com base no tempo de relacionamento
   const getBodas = (days) => {
-    if (days < 365) return 'Papel';
-    if (days < 730) return 'Algodão';
-    if (days < 1095) return 'Trigo';
-    return 'Ouro';
+    let bodas;
+    if (days < 365) {
+      bodas = bodasData.bodas_de_namoro.find((b) => {
+        const tempoEmMeses = parseInt(b.tempo.split(" ")[0]);
+        return days < tempoEmMeses * 30;
+      });
+    } else {
+      bodas = bodasData.bodas_de_casamento.find((b) => {
+        const tempoEmAnos = parseInt(b.tempo.split(" ")[0]);
+        return days < tempoEmAnos * 365;
+      });
+    }
+    return bodas ? bodas.nome : "Bodas não encontradas";
   };
 
 
-// 📌 Alterna entre Fotos e Frases ao clicar nos seletores
-const renderContent = () => {
-  if (selectedTab % 2 === 0) {
-    const index = (selectedTab / 2) % photos.length; // Garante que percorre corretamente as fotos
-    //console.log(`🖼️ Foto - Índice: ${index} | Total Fotos: ${photos.length} | URL:`, photos[index]);
-    return photos[index] ? <img src={photos[index]} alt="Casal" className="photo" /> : <p>Sem fotos</p>;
-  } else {
-    const index = Math.floor(selectedTab / 2) % frases.length; // Garante que percorre corretamente todas as frases
-    //console.log(`📝 Frase - Índice: ${index} | Total Frases: ${frases.length} | Conteúdo:`, frases[index]);
-    return frases[index] ? <PhraseBox phrase={frases[index]} /> : <p>Sem frases</p>;
-  }
-};
+
 
 
   
@@ -132,20 +176,38 @@ useEffect(() => {
 
 
 
-
+// 📌 Alterna entre Fotos e Frases ao clicar nos seletores
+const renderContent = () => {
+  if (selectedTab % 2 === 0) {
+    const index = (selectedTab / 2) % photos.length; // Garante que percorre corretamente as fotos
+    console.log(`🖼️ Foto - Índice: ${index} | Total Fotos: ${photos.length} | URL:`, photos[index]);
+    return photos[index] ? <img src={photos[index]} alt="Casal" className="photo" /> : <p>Sem fotos</p>;
+  } else {
+    const index = Math.floor(selectedTab / 2) % frases.length; // Garante que percorre corretamente todas as frases
+    //console.log(`📝 Frase - Índice: ${index} | Total Frases: ${frases.length} | Conteúdo:`, frases[index]);
+    return frases[index] ? <PhraseBox phrase={frases[index]} /> : <p>Sem frases</p>;
+  }
+};
 
 useEffect(() => {
   const interval = setInterval(() => {
     setSelectedTab((prevTab) => {
-      const maxContent = Math.max(photos.length, frases.length); // Número total de itens
-      const newTab = (prevTab + 1) % maxContent; // 🔄 Garante looping infinito entre frases e fotos
+      const totalPhotos = photos.length;
+      const totalFrases = frases.length;
+      const maxContent = totalPhotos + totalFrases; // 🔄 Total de elementos
+
+      // 🔥 Alterna entre foto e frase corretamente
+      const newTab = (prevTab + 1) % maxContent;
+
       console.log(`🔄 Alternando tab: Antes ${prevTab} | Depois ${newTab} | Total: ${maxContent}`);
+
       return newTab;
     });
   }, 9000);
 
   return () => clearInterval(interval);
-}, [photos.length, frases.length]);
+}, [photos, frases]); // 🔥 Dependências corrigidas
+
 
 
 
@@ -169,9 +231,25 @@ useEffect(() => {
 
   return (
     <div className="main-container">
-      {/* Cabeçalho */}
+   {/* 📌 Sidebar */}
+      <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
+        <button className="close-button" onClick={toggleMenu}>×</button>
+        <ul>
+          <li onClick={() => navigate('/edit-account')}>Conta</li>
+          <li onClick={() => navigate('/gallery')}>Galeria</li> 
+          <li onClick={() => navigate('/edit-phrases')}>Editar Frases</li>
+          <li onClick={() => navigate('/music-casal')}>Musica do Casal</li>
+          <li onClick={logout}>Sair</li>
+        </ul>
+            {/* 🔥 Assinatura no bottom da sidebar */}
+          <div className="sidebar-footer">
+          <p>Desenvolvido por <span className="highlight">Jota</span></p>
+        </div>
+      </div>
+
+      {/* 📌 Cabeçalho */}
       <div className="header">
-        <button className="menu-button">☰</button>
+        <button className="menu-buttonPg" onClick={toggleMenu}>☰</button>
         <h1 className="app-title">MyLove</h1>
       </div>
 
@@ -234,15 +312,26 @@ useEffect(() => {
       <p className="relationship-days">{relationshipTime}</p>
 
       {/* Barra de progresso das bodas */}
+      <p className="bodas-text">Bodas: {bodas}</p>
       <div className="progress-container">
         <div className="progress-bar" style={{ width: `${Math.min((parseInt(relationshipTime) / 365) * 100, 100)}%` }}></div>
       </div>
-      <p className="bodas-text">Bodas: {bodas}</p>
+        {/* 🎵 Player de Música */}
+        <div className="music-player-container">
+          {musicas.length > 0 ? (
+            <CustomAudioPlayer src={getPrioritizedMusic()} name={getPrioritizedMusicName()}  showName={false} />
+          ) : (
+            <p className="no-music-text">Nenhuma música disponível</p>
+          )}
+        </div>
 
-      {/* Botão de logout */}
-      <button onClick={logout} className="logout-button">
-        Sair
-      </button>
+
+      {/* 🎵 Elemento de áudio oculto */}
+      <audio ref={audioRef} onEnded={() => setIsPlaying(false)}>
+        {musicas.length > 0 && <source src={getPrioritizedMusic()} type="audio/mp3" />}
+      </audio>
+
+
     </div>
   );
 }

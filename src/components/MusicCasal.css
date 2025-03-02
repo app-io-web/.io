@@ -1,0 +1,144 @@
+.musicUploadContainer {
+    max-width: 450px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Caixa de upload */
+.uploadBoxIn {
+    width: 100%;
+    height: 150px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ff00a1;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 15px;
+}
+
+.uploadBoxIn:hover {
+    background-color: #ffe6f0;
+}
+
+/* Input escondido */
+.hiddenInput {
+    display: none;
+}
+
+/* Campo de nome da música */
+.musicInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Botões */
+.uploadButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.uploadButton, .cancelButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.uploadButton {
+    background: #ff00a1;
+    color: white;
+}
+
+.cancelButton {
+    background: #ccc;
+    color: black;
+}
+
+.uploadButton:hover {
+    background: #e6008c;
+}
+
+.cancelButton:hover {
+    background: #b3b3b3;
+}
+
+/* Lista de músicas */
+.musicList {
+    margin-top: 20px;
+}
+
+.musicItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f7f7f7;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Nome da música */
+.musicItem p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Player de áudio */
+audio {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+/* Botão de deletar */
+.delete-button {
+    background: #ff3b30;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.delete-button:hover {
+    background: #d32f2f;
+}
+
+
+.saveMusicButton{
+    background-color: #ff00a1; /* Cor principal */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    margin-top: 10px;
+
+}
