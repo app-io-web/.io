@@ -28,30 +28,30 @@ function Login({ handleLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     console.log(`🔍 Tentando login com: ${identifier} ${usePassword ? `(com senha)` : `(sem senha)`}`);
-
+  
     let query;
     if (usePassword) {
       query = `${BASE_URL}?where=(Email,eq,${identifier})~and(Password,eq,${password})`;
     } else {
       query = `${BASE_URL}?where=(UnicNameNamorado,eq,${identifier})~or(UnicNameNamorada,eq,${identifier})`;
     }
-
+  
     console.log(`📡 Enviando requisição para: ${query}`);
-
+  
     try {
       const response = await axios.get(query, {
         headers: {
           'xc-token': process.env.REACT_APP_NOCODB_API_KEY
         }
       });
-
+  
       console.log('📥 Resposta da API:', response.data);
-
+  
       if (response.data.list.length > 0) {
         console.log('✅ Login bem-sucedido!');
-        handleLogin(response.data.list[0]);
+        handleLogin(response.data.list[0], identifier); // 🔥 Passa o nome usado para login
       } else {
         console.log('❌ Nenhum usuário encontrado.');
         setError('Usuário ou senha inválidos.');
@@ -61,6 +61,7 @@ function Login({ handleLogin }) {
       setError('Erro ao tentar fazer login. Verifique sua conexão.');
     }
   };
+  
 
   return (
     <div className="loginContainer">

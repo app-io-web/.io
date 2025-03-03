@@ -67,7 +67,7 @@ function Gallery({ user, updateUser, logout}) {
     formData.append('file', selectedFile);
 
     try {
-      console.log('📤 Enviando arquivo:', selectedFile.name);
+      //console.log('📤 Enviando arquivo:', selectedFile.name);
 
       const response = await axios.post(
         `${BASE_URL}/storage/upload`,
@@ -108,7 +108,7 @@ function Gallery({ user, updateUser, logout}) {
   // 📌 **Atualiza fotos no NoCoDB**
   const updatePhotoList = async (updatedPhotos) => {
     try {
-      console.log("📤 Atualizando banco de dados:", updatedPhotos);
+      //console.log("📤 Atualizando banco de dados:", updatedPhotos);
 
       const response = await axios.patch(
         `${BASE_URL}/tables/m6xunqz86pfl6bg/records`,
@@ -126,7 +126,7 @@ function Gallery({ user, updateUser, logout}) {
         }
       );
 
-      console.log("✅ Fotos atualizadas com sucesso!", response.data);
+      //console.log("✅ Fotos atualizadas com sucesso!", response.data);
     } catch (error) {
       console.error("❌ Erro ao atualizar banco:", error);
     }
@@ -170,8 +170,8 @@ function Gallery({ user, updateUser, logout}) {
         }
     ];
 
-    console.log("📤 Atualizando fotos:", apiUrl);
-    console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
+    //console.log("📤 Atualizando fotos:", apiUrl);
+    //console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
 
     try {
         const response = await fetch(apiUrl, {
@@ -190,7 +190,7 @@ function Gallery({ user, updateUser, logout}) {
             throw new Error(`Erro na atualização: ${JSON.stringify(data)}`);
         }
 
-        console.log("✅ Fotos atualizadas com sucesso:", data);
+        //console.log("✅ Fotos atualizadas com sucesso:", data);
 
         const updatedUser = {
             ...user,
@@ -201,7 +201,7 @@ function Gallery({ user, updateUser, logout}) {
         updateUser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        console.log("🔄 Fotos atualizadas globalmente:", updatedUser);
+        //console.log("🔄 Fotos atualizadas globalmente:", updatedUser);
 
 
 
@@ -220,21 +220,24 @@ function Gallery({ user, updateUser, logout}) {
 
   return (
     <div className="photoUploadContainer">
-      {/* 📌 Sidebar */}
-      <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
-        <button className="close-button" onClick={toggleMenu}>×</button>
-        <ul>
-          <li onClick={() => navigate('/main')}>Home</li>
-          <li onClick={() => navigate('/edit-account')}>Conta</li>
-          <li onClick={() => navigate('/edit-phrases')}>Frases</li>
-          <li onClick={logout}>Sair</li>
-        </ul>
+        {/* 📌 Sidebar */}
+        <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
+          <button className="close-button" onClick={toggleMenu}>×</button>
+          <ul>
+            <li onClick={() => navigate('/edit-account')}>Conta</li>
+            <li onClick={() => navigate('/gallery')}>Galeria</li> 
+            <li onClick={() => navigate('/edit-phrases')}>Editar Frases</li>
+            <li onClick={() => navigate('/music-casal')}>Música do Casal</li>
+            <li onClick={logout}>Sair</li>
 
+          </ul>
+          
           {/* 🔥 Assinatura no bottom da sidebar */}
           <div className="sidebar-footer">
-          <p>Desenvolvido por <span className="highlight">Jota</span></p>
+            <p>Desenvolvido por <span className="highlight">Jota</span></p>
+          </div>
         </div>
-      </div>
+
 
       {/* 📌 Cabeçalho */}
       <div className="header">

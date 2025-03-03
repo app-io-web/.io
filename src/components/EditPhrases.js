@@ -62,8 +62,8 @@ function EditPhrases({ user, updateUser, logout }) {
       }
     ];
 
-    console.log("📤 Atualizando frases:", apiUrl);
-    console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
+    //console.log("📤 Atualizando frases:", apiUrl);
+    //console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
 
     try {
       const response = await axios.patch(apiUrl, payload, {
@@ -75,7 +75,7 @@ function EditPhrases({ user, updateUser, logout }) {
 
       const data = response.data;
 
-      console.log("✅ Frases atualizadas com sucesso:", data);
+      //console.log("✅ Frases atualizadas com sucesso:", data);
 
       const updatedUser = {
         ...user,
@@ -86,7 +86,7 @@ function EditPhrases({ user, updateUser, logout }) {
       updateUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
-      console.log("🔄 Frases atualizadas globalmente:", updatedUser);
+      //console.log("🔄 Frases atualizadas globalmente:", updatedUser);
       // 🔥 Exibe o modal de sucesso
       setSuccessMessage("✅ Frase salva com sucesso!");
 

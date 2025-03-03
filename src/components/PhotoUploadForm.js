@@ -52,7 +52,7 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
         }
       );
   
-      console.log('✅ Upload bem-sucedido:', response.data);
+      //console.log('✅ Upload bem-sucedido:', response.data);
   
       if (response.data && response.data.length > 0) {
         const filePath = response.data[0].path;
@@ -105,7 +105,7 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
       UnicNameNamorada: `${dadosCadastro.nomeNamorada.toLowerCase()}_${uuidv4().substring(0, 8)}`
     };
   
-    console.log("📤 Enviando JSON Final:", finalData); // ✅ Log dos dados antes de enviar
+    //console.log("📤 Enviando JSON Final:", finalData); // ✅ Log dos dados antes de enviar
   
     try {
       const response = await axios.post(

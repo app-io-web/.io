@@ -60,8 +60,8 @@ function EditAccount({ user, updateUser, logout }) {
         }
     ];
 
-    console.log("📤 Atualizando:", apiUrl);
-    console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
+    //console.log("📤 Atualizando:", apiUrl);
+    //console.log("📤 Payload Enviado:", JSON.stringify(payload, null, 2));
 
     try {
         const response = await fetch(apiUrl, {
@@ -80,7 +80,7 @@ function EditAccount({ user, updateUser, logout }) {
             throw new Error(`Erro na atualização: ${JSON.stringify(data)}`);
         }
 
-        console.log("✅ Dados atualizados com sucesso:", data);
+        //console.log("✅ Dados atualizados com sucesso:", data);
 
         const updatedUser = {
             ...user,
@@ -97,7 +97,7 @@ function EditAccount({ user, updateUser, logout }) {
         updateUser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
-        console.log("🔄 Usuário atualizado globalmente:", updatedUser);
+        //console.log("🔄 Usuário atualizado globalmente:", updatedUser);
 
         navigate("/main");
 

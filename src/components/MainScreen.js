@@ -31,6 +31,112 @@ function MainScreen({ user, logout }) {
   const [decorImages, setDecorImages] = useState([]);
   const [fadeKey, setFadeKey] = useState(0); // Para controle da animação
   const [isPlaying, setIsPlaying] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [isUpdatingLocation, setIsUpdatingLocation] = useState(false);
+
+
+  const updateLocationInDatabase = async (latitude, longitude) => {
+    if (!user) return;
+  
+    console.log("🔍 Dados do usuário logado:", user);
+    console.log("👤 UnicName:", user.UnicName);
+    console.log("❤️ UnicNameNamorado:", user.UnicNameNamorado);
+    console.log("💖 UnicNameNamorada:", user.UnicNameNamorada);
+  
+    let fieldToUpdate = "";
+    
+    // Verifica se o usuário logado é o namorado
+    if (user.UnicName && user.UnicName.toLowerCase() === user.UnicNameNamorado?.toLowerCase()) {
+      fieldToUpdate = "Localizacao_do_Namorado";
+    } else if (user.UnicName && user.UnicName.toLowerCase() === user.UnicNameNamorada?.toLowerCase()) {
+      fieldToUpdate = "Localizacao_da_Namorada"; // Verifique se está correto
+    } else {
+      console.warn("⚠️ Usuário logado não corresponde a namorado(a), localização não será salva.");
+      return;
+    }
+    
+  
+    console.log(`📡 Atualizando ${fieldToUpdate}:`, { latitude, longitude });
+  
+    const payload = [
+      {
+        Id: user.Id,
+        [fieldToUpdate]: JSON.stringify({ latitude, longitude }),
+      }
+    ];
+  
+    console.log("📤 Enviando atualização para NoCoDB:", JSON.stringify(payload, null, 2));
+  
+    try {
+      const response = await fetch(`${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "xc-token": process.env.REACT_APP_NOCODB_API_KEY,
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        console.error("❌ Erro ao atualizar localização:", data);
+        throw new Error(`Erro ao atualizar: ${JSON.stringify(data)}`);
+      }
+  
+      console.log("✅ Localização atualizada com sucesso!", data);
+    } catch (error) {
+      console.error("❌ Erro na atualização da localização:", error.message);
+    }
+  };
+  useEffect(() => {
+    if (!user) return;
+  
+    let locationInterval;
+  
+    if ("geolocation" in navigator) {
+      setIsUpdatingLocation(true);
+  
+      // 🔄 Atualiza a localização a cada 3 segundos
+      locationInterval = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLatitude(latitude);
+            setLongitude(longitude);
+  
+            console.log(`📍 Localização detectada: Lat ${latitude}, Long ${longitude}`);
+            updateLocationInDatabase(latitude, longitude);
+            setIsUpdatingLocation(false);
+          },
+          (error) => {
+            console.error("❌ Erro ao obter localização:", error);
+            setIsUpdatingLocation(false);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 10000,
+          }
+        );
+      }, 3000); // Atualiza a cada 3 segundos
+    } else {
+      console.error("⚠️ Geolocalização não suportada neste navegador.");
+    }
+  
+    // 🚨 Limpa o intervalo quando o componente for desmontado ou o usuário sair
+    return () => {
+      if (locationInterval) clearInterval(locationInterval);
+    };
+  
+  }, [user]); // ⚠️ Garante que a atualização só ocorre se o usuário estiver logado
+  
+
+  
+  
+  
+
   const audioRef = useRef(null);
 
   const navigate = useNavigate();
@@ -47,6 +153,9 @@ function MainScreen({ user, logout }) {
       return Array.isArray(user.MusicCasal) ? user.MusicCasal : user.MusicCasal ? [user.MusicCasal] : [];
     }
   })();
+
+
+  
 
 
 
@@ -183,7 +292,7 @@ useEffect(() => {
 const renderContent = () => {
   if (selectedTab % 2 === 0) {
     const index = (selectedTab / 2) % photos.length; // Garante que percorre corretamente as fotos
-    console.log(`🖼️ Foto - Índice: ${index} | Total Fotos: ${photos.length} | URL:`, photos[index]);
+    //console.log(`🖼️ Foto - Índice: ${index} | Total Fotos: ${photos.length} | URL:`, photos[index]);
     return photos[index] ? <img src={photos[index]} alt="Casal" className="photo" /> : <p>Sem fotos</p>;
   } else {
     const index = Math.floor(selectedTab / 2) % frases.length; // Garante que percorre corretamente todas as frases
@@ -202,7 +311,7 @@ useEffect(() => {
       // 🔥 Alterna entre foto e frase corretamente
       const newTab = (prevTab + 1) % maxContent;
 
-      console.log(`🔄 Alternando tab: Antes ${prevTab} | Depois ${newTab} | Total: ${maxContent}`);
+      //console.log(`🔄 Alternando tab: Antes ${prevTab} | Depois ${newTab} | Total: ${maxContent}`);
 
       return newTab;
     });

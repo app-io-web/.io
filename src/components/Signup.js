@@ -65,7 +65,7 @@ function Signup() {
         FOTOS_JSON: fotosJson
       }, config);
   
-      console.log('✅ Cadastro realizado:', response.data);
+      //console.log('✅ Cadastro realizado:', response.data);
       setModalMessage('Cadastro realizado com sucesso!');
       setModalIsOpen(true);
   
