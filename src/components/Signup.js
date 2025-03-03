@@ -30,52 +30,66 @@ function Signup() {
     setCurrentStep(1); // Retorna para a primeira etapa
   };
 
+
+  
+
+
+
+
+
+
+
   const handleSignup = async () => {
     if (!email || !password || !nomeNamorado || !nomeNamorada || !dataInicioNamoro) {
-      setModalMessage('Por favor, preencha todos os campos obrigatórios.');
-      setModalIsOpen(true);
-      return;
+        setModalMessage('Por favor, preencha todos os campos obrigatórios.');
+        setModalIsOpen(true);
+        return;
     }
-  
+    console.log("🚀 handleSignup() foi chamado!");
+
     const idUnic = uuidv4();
     const unicNameNamorado = `${nomeNamorado.toLowerCase()}_${idUnic.substring(0, 8)}`;
     const unicNameNamorada = `${nomeNamorada.toLowerCase()}_${idUnic.substring(0, 8)}`;
-    const frasesUnicas = JSON.stringify(frases); 
+    const frasesUnicas = JSON.stringify(frases);
     const fotosJson = JSON.stringify(photos);
-  
+
     const config = {
-      headers: {
-        'xc-token': process.env.REACT_APP_NOCODB_API_KEY
-      }
+        headers: {
+            'xc-token': process.env.REACT_APP_NOCODB_API_KEY
+        }
     };
-  
+
     try {
-      const response = await axios.post(`${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`, {
-        Email: email,
-        Password: password,
-        NomeNamorado: nomeNamorado,
-        NomeNamorada: nomeNamorada,
-        Data_Inicio_Namoro: dataInicioNamoro,
-        ID_UNIC: idUnic,
-        UnicNameNamorado: unicNameNamorado,
-        UnicNameNamorada: unicNameNamorada,
-        E_Casado: isCasado,
-        Data_Inicio_Casamento: isCasado ? dataInicioCasamento : null,
-        FRASES_UNICAS: frasesUnicas,
-        FOTOS_JSON: fotosJson
-      }, config);
-  
-      //console.log('✅ Cadastro realizado:', response.data);
-      setModalMessage('Cadastro realizado com sucesso!');
-      setModalIsOpen(true);
-  
+        const response = await axios.post(`${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`, {
+            Email: email,
+            Password: password,
+            NomeNamorado: nomeNamorado,
+            NomeNamorada: nomeNamorada,
+            Data_Inicio_Namoro: dataInicioNamoro,
+            ID_UNIC: idUnic,
+            UnicNameNamorado: unicNameNamorado,
+            UnicNameNamorada: unicNameNamorada,
+            E_Casado: isCasado,
+            Data_Inicio_Casamento: isCasado ? dataInicioCasamento : null,
+            FRASES_UNICAS: frasesUnicas,
+            FOTOS_JSON: fotosJson
+        }, config);
+
+        console.log('✅ Cadastro realizado:', response.data);
+        setModalMessage('Cadastro realizado com sucesso!');
+        setModalIsOpen(true);
+
+
     } catch (error) {
-      console.error('❌ Erro no cadastro:', error);
-      setModalMessage('Erro no cadastro: ' + (error.response ? error.response.data : error.message));
-      setModalIsOpen(true);
+        console.error('❌ Erro no cadastro:', error);
+        setModalMessage('Erro no cadastro: ' + (error.response ? error.response.data : error.message));
+        setModalIsOpen(true);
     }
-  };
+};
+
+
   
+
 
   
   

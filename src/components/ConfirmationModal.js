@@ -7,7 +7,7 @@ function ConfirmationModal({ isOpen, onClose, message }) {
   return (
     <div className="modalOverlay">
       <div className="modalContent">
-        <p>{message}</p>
+      <p dangerouslySetInnerHTML={{ __html: message }}></p>
         <button onClick={onClose}>Fechar</button>
       </div>
     </div>

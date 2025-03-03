@@ -22,6 +22,11 @@ function PhrasesForm({ handleSignup, handlePreviousStep, frases, setFrases, setP
     setCurrentStep(2);
   };
 
+
+
+
+  
+
   return (
     <div className="phrasesFormContainer">
       {currentStep === 1 && (
@@ -56,14 +61,15 @@ function PhrasesForm({ handleSignup, handlePreviousStep, frases, setFrases, setP
       )}
 
 {currentStep === 2 && (
-        <PhotoUploadForm 
+          <PhotoUploadForm 
           handlePreviousStep={() => setCurrentStep(1)}
           handleFinalSubmit={handleSignup}
-          updatePhotosJson={setPhotos}
+          updatePhotosJson={setPhotos} // 🔴 Pode ser removido, pois setPhotos já é passado corretamente abaixo
           frases={frases}
-          dadosCadastro={dadosCadastro} // ✅ Agora os dados são passados corretamente
+          dadosCadastro={dadosCadastro}
           setModalMessage={setModalMessage}
           setModalIsOpen={setModalIsOpen}
+          setPhotos={setPhotos} // ✅ Agora setPhotos está sendo passado corretamente
         />
       )}
     </div>

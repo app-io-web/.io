@@ -91,7 +91,7 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
     }
   
     const finalData = {
-      Email: dadosCadastro.email,  // ✅ Certifique-se que os nomes batem com os do NoCoDB
+      Email: dadosCadastro.email,
       Password: dadosCadastro.password,
       NomeNamorado: dadosCadastro.nomeNamorado,
       NomeNamorada: dadosCadastro.nomeNamorada,
@@ -105,8 +105,6 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
       UnicNameNamorada: `${dadosCadastro.nomeNamorada.toLowerCase()}_${uuidv4().substring(0, 8)}`
     };
   
-    //console.log("📤 Enviando JSON Final:", finalData); // ✅ Log dos dados antes de enviar
-  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_NOCODB_API_URL}/tables/m6xunqz86pfl6bg/records`,
@@ -118,11 +116,43 @@ function PhotoUploadForm({ handlePreviousStep, handleFinalSubmit, updatePhotosJs
         }
       );
   
-      setModalMessage('🎉 Cadastro finalizado com sucesso!');
+      setModalMessage(
+        '🎉 <strong>Cadastro finalizado com sucesso!</strong><br><br>' +
+        'Verifique seu <strong>e-mail</strong> para obter as informações de login. 📩<br><br>' +
+        'Se não encontrar na <strong>caixa de entrada</strong>, confira a pasta de <strong>spam</strong> ou <strong>lixo eletrônico</strong>.'
+      );
+      
       setModalIsOpen(true);
+
+      console.log("📨 Chamando função de envio de e-mail...");
+      await sendConfirmationEmail(
+        dadosCadastro.email, 
+        dadosCadastro.nomeNamorado, 
+        dadosCadastro.password, 
+        finalData.UnicNameNamorado, 
+        finalData.UnicNameNamorada
+      );
+
     } catch (error) {
       console.error('❌ Erro no cadastro:', error);
       setError('Erro no cadastro.');
+    }
+};
+
+  
+
+  const sendConfirmationEmail = async (userEmail, userName, password, unicNameNamorado, unicNameNamorada) => {
+    try {
+        await axios.post("https://www.api.mylove-email.appsy.app.br/send-email", {
+            email: userEmail,
+            name: userName,
+            password: password, 
+            unicNameNamorado: unicNameNamorado, 
+            unicNameNamorada: unicNameNamorada
+        });
+        console.log("✅ E-mail enviado com sucesso!");
+    } catch (error) {
+        console.error("❌ Erro ao enviar e-mail:", error);
     }
   };
   
