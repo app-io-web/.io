@@ -53,7 +53,7 @@ function App() {
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
     localStorage.setItem('token', Date.now() + (5 * 60 * 1000)); // 🔥 5 minutos de sessão
-    window.location.href = "#/main";
+    window.location.href = "/main";
   };
   
 
