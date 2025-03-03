@@ -35,7 +35,7 @@ function MainScreen({ user, logout }) {
   const [longitude, setLongitude] = useState(null);
   const [isUpdatingLocation, setIsUpdatingLocation] = useState(false);
 
-
+/*
   const updateLocationInDatabase = async (latitude, longitude) => {
     if (!user) return;
   
@@ -98,6 +98,7 @@ function MainScreen({ user, logout }) {
     if ("geolocation" in navigator) {
       setIsUpdatingLocation(true);
   
+      
       // 🔄 Atualiza a localização a cada 3 segundos
       locationInterval = setInterval(() => {
         navigator.geolocation.getCurrentPosition(
@@ -133,7 +134,7 @@ function MainScreen({ user, logout }) {
   }, [user]); // ⚠️ Garante que a atualização só ocorre se o usuário estiver logado
   
 
-  
+  */
   
   
 
@@ -248,13 +249,7 @@ function MainScreen({ user, logout }) {
   };
 
 
-
-
-
-  
-
-
-// Função para escolher uma animação aleatória
+// Pegando as animações aleatórias do css
 const getRandomAnimation = () => {
   const animations = [
     "animation-fadeIn",
@@ -268,34 +263,28 @@ const getRandomAnimation = () => {
 };
 
 
-
-
-// 🔥 Atualiza as imagens decorativas SOMENTE quando muda para frase
 useEffect(() => {
   if (selectedTab % 2 !== 0) {
     setDecorImages(
       getRandomImages().map(img => ({
         src: img,
-        animation: getRandomAnimation() // Adiciona uma animação aleatória a cada imagem
+        animation: getRandomAnimation() 
       }))
     );
   } else {
-    setDecorImages([]); // Limpa as imagens decorativas quando não for frase
+    setDecorImages([]); 
   }
 }, [selectedTab]);
 
 
-
-
-
-// 📌 Alterna entre Fotos e Frases ao clicar nos seletores
+// Alternanado entre Fotos e Frases ao clicar nos seletores
 const renderContent = () => {
   if (selectedTab % 2 === 0) {
-    const index = (selectedTab / 2) % photos.length; // Garante que percorre corretamente as fotos
+    const index = (selectedTab / 2) % photos.length; 
     //console.log(`🖼️ Foto - Índice: ${index} | Total Fotos: ${photos.length} | URL:`, photos[index]);
     return photos[index] ? <img src={photos[index]} alt="Casal" className="photo" /> : <p>Sem fotos</p>;
   } else {
-    const index = Math.floor(selectedTab / 2) % frases.length; // Garante que percorre corretamente todas as frases
+    const index = Math.floor(selectedTab / 2) % frases.length; 
     //console.log(`📝 Frase - Índice: ${index} | Total Frases: ${frases.length} | Conteúdo:`, frases[index]);
     return frases[index] ? <PhraseBox phrase={frases[index]} /> : <p>Sem frases</p>;
   }
