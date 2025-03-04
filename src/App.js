@@ -82,12 +82,7 @@ function App() {
           <Route path="/gallery" element={user ? <Gallery user={user} updateUser={setUser} logout={handleLogout} /> : <Navigate to="/" />} />
         </Routes>
 
-        {/* 📢 Botão para instalação no Android */}
-        {showInstallPrompt && (
-          <button className="install-button" onClick={showInstallPrompt}>
-            📥 Instalar MyLove App
-          </button>
-        )}
+        
       </div>
     </Router>
   );
